@@ -6,7 +6,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".MainActivity">
+        tools:context=".ui.MainActivity">
 
     <View
             android:id="@+id/activity_main_dim"
@@ -14,9 +14,10 @@
             android:layout_height="match_parent"
             android:background="@color/dim"
             android:elevation="5dp"
+            android:alpha="100"
             android:visibility="gone"/>
 
-    <androidx.cardview.widget.CardView
+    <com.google.android.material.card.MaterialCardView
             android:id="@+id/cv_contacts_recyclerview"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_width="match_parent"
@@ -55,17 +56,18 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-    </androidx.cardview.widget.CardView>
+    </com.google.android.material.card.MaterialCardView>
 
     <LinearLayout
             android:id="@+id/contact_bottom_sheet"
             android:layout_width="match_parent"
-            android:background="@drawable/bottom_sheet_shape"
             android:layout_height="wrap_content"
+            android:paddingBottom="30dp"
+            android:background="@drawable/bottom_sheet_shape"
+            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             app:behavior_peekHeight="40dp"
             app:behavior_skipCollapsed="true"
             app:behavior_hideable="false"
-            app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior"
             android:elevation="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,8 +90,8 @@
                     android:layout_height="wrap_content"
                     android:text="Add"
                     app:layout_constraintEnd_toEndOf="@+id/iv_contact_photo"
-                    app:layout_constraintBottom_toBottomOf="@+id/et_contact_email"
-                    app:layout_constraintTop_toTopOf="@+id/et_contact_email"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_layout_contact_email"
+                    app:layout_constraintTop_toTopOf="@+id/tv_layout_contact_email"
                     app:layout_constraintStart_toStartOf="@+id/iv_contact_photo"/>
 
             <ImageView
@@ -98,50 +100,75 @@
                     android:layout_height="100dp"
                     android:layout_marginEnd="8dp"
                     app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintTop_toTopOf="@+id/et_contact_name"
-                    app:layout_constraintBottom_toBottomOf="@+id/et_contact_phone_number"
+                    app:layout_constraintTop_toTopOf="@+id/tv_layout_contact_name"
+                    app:layout_constraintBottom_toBottomOf="@+id/tv_layout_phone_number"
                     app:srcCompat="@android:color/holo_blue_bright"/>
 
-            <EditText
-                    android:id="@+id/et_contact_phone_number"
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tv_layout_contact_name"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:errorEnabled="true"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:inputType="phone"
-                    android:ems="10"
-                    android:hint="Phone number"
-                    android:layout_margin="8dp"
-                    app:layout_constraintEnd_toStartOf="@+id/iv_contact_photo"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toBottomOf="@+id/et_contact_name"
-                    app:layout_constraintBottom_toTopOf="@+id/et_contact_email"/>
-
-            <EditText
-                    android:id="@+id/et_contact_name"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPersonName"
-                    android:ems="10"
-                    android:hint="Name"
                     android:layout_margin="8dp"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintEnd_toStartOf="@+id/iv_contact_photo"
-                    app:layout_constraintTop_toBottomOf="@+id/tv_contact_label"/>
+                    app:layout_constraintTop_toBottomOf="@+id/tv_contact_label" android:layout_marginEnd="8dp">
 
-            <EditText
-                    android:id="@+id/et_contact_email"
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tv_contact_name"
+                        android:layout_height="match_parent"
+                        android:layout_width="match_parent"
+                        android:inputType="textPersonName"
+                        android:ems="10"
+                        android:hint="Name"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tv_layout_phone_number"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:errorEnabled="true"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:hint="E-mail"
-                    android:inputType="textEmailAddress"
-                    android:ems="10"
-                    android:layout_marginBottom="8dp"
+                    android:layout_margin="8dp"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_contact_photo"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toBottomOf="@+id/tv_layout_contact_name"
+                    app:layout_constraintBottom_toTopOf="@+id/tv_layout_contact_email" android:layout_marginEnd="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tv_contact_phone_number"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:inputType="phone"
+                        android:ems="10"
+                        android:hint="Phone number"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tv_layout_contact_email"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
+                    app:errorEnabled="true"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     app:layout_constraintBottom_toBottomOf="parent"
-                    app:layout_constraintStart_toStartOf="@+id/et_contact_phone_number"
-                    app:layout_constraintEnd_toEndOf="@+id/et_contact_phone_number"/>
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintEnd_toStartOf="@+id/iv_contact_photo" android:layout_marginEnd="8dp">
+
+                <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/tv_contact_email"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:hint="E-mail"
+                        android:inputType="textEmailAddress"/>
+
+            </com.google.android.material.textfield.TextInputLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
-
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
